@@ -7,7 +7,13 @@ TOOL_REGISTRY ={
 
 }
 
+
+
 def dispatch_tool(tool_name: str, argument: str) -> str:
+
+    if argument is not None and not isinstance(argument, str):
+        return "Invalid argument"
+    
     if tool_name in TOOL_REGISTRY:
         return TOOL_REGISTRY[tool_name](argument)
     

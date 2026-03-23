@@ -1,9 +1,31 @@
-# Environments
+# Virtual environment
 envi/
 venv/
+.venv/
+env/
+
+# Python cache
 __pycache__/
+*.py[cod]
+*.pyo
+
+# Environment variables (API keys)
+.env
+*.env
+
+# Docker ignore artifacts
+.dockerignore
 
 # OS files
 .DS_Store
+Thumbs.db
 
-# Test file
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Data files
+data

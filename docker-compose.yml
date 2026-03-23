@@ -1,0 +1,17 @@
+version: "3.9"
+
+services:
+  app:
+    build: .
+    container_name: agent_app
+    stdin_open: true  # for input()
+    tty: true         # interactive terminal
+    depends_on:
+      - ollama
+    environment:
+      - OLLAMA_HOST=http://ollama:11434   
+
+  ollama:
+      image: ollama/ollama
+      container_name: ollama
+      

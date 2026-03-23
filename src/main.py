@@ -1,18 +1,24 @@
+import os
 import ollama
 import action_selection
 import parse
 import tool_description
 import tool_dispatcher
 
+OLLAMA_HOST = os.getenv("OLLAMA_HOST", "http://localhost:11434")
+client = ollama.Client(host=OLLAMA_HOST)
+
 def run_agent(question: str):
     # 1. Ask LLM to decide what to do
-    prompt = action_selection.build_prompt(question, tool_description.TOOLS)
-    response = ollama.generate(model='mistral', prompt = prompt)
+    prompt = action_selection.build_prompt(question, tool_description.TOOLS)    
+    response = client.generate(model='mistral', prompt = prompt)
     llm_output = response['response']
 
     # 2. parse the decision
 
     action_type, content, argument = parse.parse_action(llm_output)
+
+    
 
     if action_type == "tool":
         print(f"[using tool]:{content, argument}")
@@ -24,7 +30,7 @@ def run_agent(question: str):
         You used the tool '{content}' and got this result: {tool_result}
         Now give a friendly, complete answer to the user."""
 
-        final = ollama.generate(model='mistral', prompt = followup)
+        final = client.generate(model='mistral', prompt = followup)
         print("Answer:", final['response'])
 
 #Main loop:
